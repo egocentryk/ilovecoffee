@@ -1,10 +1,32 @@
 import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { CoffeesModule } from './coffees/coffees.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { configSchema } from './config.schema'
 
 @Module({
-  imports: [CoffeesModule],
+  imports: [
+    CoffeesModule,
+    ConfigModule.forRoot({
+      validationSchema: configSchema,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DATABASE_HOST'),
+        port: parseInt(configService.get('DATABASE_PORT') || '5432', 10),
+        username: configService.get('DATABASE_USER'),
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE_NAME'),
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
+      inject: [ConfigService],
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
