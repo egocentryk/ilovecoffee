@@ -5,6 +5,7 @@ import { AppService } from './app.service'
 import { CoffeesModule } from './coffees/coffees.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { configSchema } from './config.schema'
+import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { configSchema } from './config.schema'
       }),
       inject: [ConfigService],
     }),
+    CoffeeRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
