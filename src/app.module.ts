@@ -7,12 +7,14 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { configSchema } from './config.schema'
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module'
 import { DevtoolsModule } from '@nestjs/devtools-integration'
+import appConfig from './config/app.config'
 
 @Module({
   imports: [
     CoffeesModule,
     ConfigModule.forRoot({
       validationSchema: configSchema,
+      load: [appConfig],
     }),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
