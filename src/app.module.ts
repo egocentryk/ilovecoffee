@@ -5,13 +5,17 @@ import { AppService } from './app.service'
 import { CoffeesModule } from './coffees/coffees.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { configSchema } from './config.schema'
-import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
+import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module'
+import { DevtoolsModule } from '@nestjs/devtools-integration'
 
 @Module({
   imports: [
     CoffeesModule,
     ConfigModule.forRoot({
       validationSchema: configSchema,
+    }),
+    DevtoolsModule.register({
+      http: process.env.NODE_ENV !== 'production',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
