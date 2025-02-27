@@ -8,10 +8,12 @@ import { configSchema } from './config.schema'
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module'
 import { DevtoolsModule } from '@nestjs/devtools-integration'
 import appConfig from './config/app.config'
+import { CommonModule } from './common/common.module'
 
 @Module({
   imports: [
     CoffeesModule,
+    CommonModule,
     ConfigModule.forRoot({
       validationSchema: configSchema,
       load: [appConfig],
