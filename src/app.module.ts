@@ -13,7 +13,7 @@ import { CommonModule } from './common/common.module'
 @Module({
   imports: [
     CoffeesModule,
-    CommonModule,
+    // CommonModule,
     ConfigModule.forRoot({
       validationSchema: configSchema,
       load: [appConfig],
